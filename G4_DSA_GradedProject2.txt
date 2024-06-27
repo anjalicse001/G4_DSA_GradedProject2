@@ -1,0 +1,44 @@
+import java.util.PriorityQueue;
+import java.util.Scanner;
+
+public class SkyscraperConstruction {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        // Read the total number of floors
+        System.out.println("enter the total no of floors in the building");
+        int n = scanner.nextInt();
+        
+        int[] floors = new int[n];
+        
+        // Read the floor sizes for each day
+        for (int i = 0; i < n; i++) {
+            System.out.println("enter the floor size given on day : " + (i + 1));
+            floors[i] = scanner.nextInt();
+        }
+        
+        System.out.println("The order of construction is as follows");
+        
+        // Max heap to keep track of the largest floors available
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> b - a);
+        
+        // Variable to keep track of the next largest floor to assemble
+        int nextFloorToAssemble = n;
+        
+        for (int day = 0; day < n; day++) {
+            // Add the floor received on the current day to the heap
+            maxHeap.add(floors[day]);
+            
+            System.out.println("Day: " + (day + 1));
+            
+            // Assemble floors in descending order if possible
+            while (!maxHeap.isEmpty() && maxHeap.peek() == nextFloorToAssemble) {
+                System.out.print(maxHeap.poll() + " ");
+                nextFloorToAssemble--;
+            }
+            System.out.println();
+        }
+        
+        scanner.close();
+    }
+}
